@@ -13,9 +13,24 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.niceapp.nutriapp.modelo.Persona;
 
 public class Home extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private EditText usuario, edad, peso, altura;
+    Button guardar;
+    private String usuarioE, id;
+    private int edadE, alturaE;
+    private double pesoE;
+
+    DatabaseReference databaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +53,17 @@ public class Home extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
+        initComponents();
+
+        databaseReference= FirebaseDatabase.getInstance().getReference();
+    }
+
+    public void initComponents() {
+        usuario = findViewById(R.id.usuario);
+        edad = findViewById(R.id.edad);
+        peso = findViewById(R.id.peso);
+        altura = findViewById(R.id.altura);
+        guardar = findViewById(R.id.guardar);
     }
 
     @Override
@@ -95,5 +121,18 @@ public class Home extends AppCompatActivity
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void guardar(View view) {
+        usuarioE= usuario.getText().toString();
+        alturaE=Integer.parseInt(altura.getText().toString());
+        edadE = Integer.parseInt(edad.getText().toString());
+        pesoE = Double.parseDouble(peso.getText().toString());
+        id=databaseReference.push().getKey();
+
+        Persona persona = new Persona(usuarioE,edadE,pesoE,alturaE);
+        databaseReference.child("persona").child("id").setValue(persona);
+        Toast.makeText(getApplicationContext(),"Usuario Registrado", Toast.LENGTH_LONG).show();
+
     }
 }
