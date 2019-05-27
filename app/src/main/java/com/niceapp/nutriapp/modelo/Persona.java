@@ -1,20 +1,23 @@
 package com.niceapp.nutriapp.modelo;
 
+import com.google.firebase.database.IgnoreExtraProperties;
+
 public class Persona {
 
     private String usuario;
     private int edad;
     private double peso;
-    private int altura;
+    private int estatura;
 
     public Persona() {
+        super();
     }
 
-    public Persona(String usuario, int edad, double peso, int altura) {
+    public Persona(String usuario, int edad, double peso, int estatura) {
         this.usuario = usuario;
         this.edad = edad;
         this.peso = peso;
-        this.altura = altura;
+        this.estatura = estatura;
     }
 
     public String getUsuario() {
@@ -41,11 +44,11 @@ public class Persona {
         this.peso = peso;
     }
 
-    public int getAltura() {
-        return altura;
+    public int getEstatura() {
+        return estatura;
     }
 
-    public void setAltura(int altura) {
-        this.altura = altura;
+    public void setEstatura(int estatura) {
+        this.estatura = estatura;
     }
 }
