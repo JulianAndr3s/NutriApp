@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "489145161280",
+    "firebase_url": "https://nutriapp-fcd21.firebaseio.com",
+    "project_id": "nutriapp-fcd21",
+    "storage_bucket": "nutriapp-fcd21.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:489145161280:android:f402b5f508df0d58",
+        "android_client_info": {
+          "package_name": "com.niceapp.nutriapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "489145161280-utraevbbujr0l1t7g57kdeo7e6kot54r.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.niceapp.nutriapp",
+            "certificate_hash": "fb9a2add2af63809748d2c6d8eb402208ad07b4f"
+          }
+        },
+        {
+          "client_id": "489145161280-ncqh771f1sff39f8bq89ce394j67va6r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAJ3ACJkbXNql-IBtznxhbHoR4erGRoPLE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "489145161280-ncqh771f1sff39f8bq89ce394j67va6r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
