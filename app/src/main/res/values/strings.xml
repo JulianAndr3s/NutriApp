@@ -22,4 +22,26 @@
     <string name="menu_tools">Tools</string>
     <string name="menu_share">Share</string>
     <string name="menu_send">Send</string>
+    <string name="nutrihealth">NutriHealth</string>
+    <string name="descripcion_principal">Una alimentacion sana es la base de todo</string>
+    <string name="digite_correo">Digite un correo electronico</string>
+    <string name="digite_contraseña">Digite la contraseña</string>
+    <string name="iniciar_sesion">Iniciar Sesión</string>
+    <string name="registrarse">Registrarse</string>
+    <string name="title_activity_registro">Registro</string>
+    <string name="llena_campos">Llena todos los campos.</string>
+    <string name="fecha_nacimiento">Fecha de nacimiento</string>
+    <string name="repite_contraseña">Repite la contraseña</string>
+    <string name="contraseña">Contraseña</string>
+    <string name="correo">Correo</string>
+    <string name="apellido">Apellido</string>
+    <string name="nombre">Nombre</string>
+    <string name="alimentacion">Alimentacion</string>
+    <string name="contacta">Contacta con nosotros</string>
+    <string name="info_nosotros">Sobre nosotros</string>
+    <string name="ingresa_datos">Ingresa tus datos</string>
+    <string name="consejos">Consejos</string>
+    <string name="correo_desarrollo">nutrihealth@gmail.com</string>
+    <string name="title_activity_consejos">Consejos</string>
+    <string name="title_activity_ingresodatos">Ingreso de datos</string>
 </resources>

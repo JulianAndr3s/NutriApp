@@ -6,16 +6,30 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/logo"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.AlimentacionActivity"></activity>
         <activity
-            android:name=".Home"
-            android:label="@string/title_activity_home"
-            android:theme="@style/AppTheme.NoActionBar" />
+        android:name=".Home"
+        android:label="@string/title_activity_home"
+        android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".registro.RegistroActivity"
+            android:label="@string/title_activity_registro"/>
+        <activity
+            android:name=".consejos.ConsejosActivity"
+            android:label="@string/title_activity_consejos"/>
+        <activity
+            android:name=".datosusuario.IngresoDatosActivity"
+            android:label="@string/title_activity_ingresodatos"/>
+        <activity
+            android:name=".nosotros.ContactoActivity"
+            android:label="@string/contacta"/>
+        <activity
+            android:name=".nosotros.NosotrosActivity"
+            android:label="@string/info_nosotros"/>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

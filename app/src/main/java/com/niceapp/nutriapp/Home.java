@@ -1,5 +1,6 @@
 package com.niceapp.nutriapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -20,8 +21,12 @@ import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.niceapp.nutriapp.Fragment.AlimentacionFragment;
+import com.niceapp.nutriapp.consejos.ConsejosActivity;
+import com.niceapp.nutriapp.datosusuario.IngresoDatosActivity;
+import com.niceapp.nutriapp.fragment.AlimentacionFragment;
 import com.niceapp.nutriapp.modelo.Persona;
+import com.niceapp.nutriapp.nosotros.ContactoActivity;
+import com.niceapp.nutriapp.nosotros.NosotrosActivity;
 
 public class Home extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -40,14 +45,7 @@ public class Home extends AppCompatActivity
         setContentView(R.layout.activity_home);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -107,19 +105,21 @@ public class Home extends AppCompatActivity
         Fragment fragment = null;
         int id = item.getItemId();
 
-        if (id == R.id.nav_home) {
+        if (id == R.id.nav_alimentacion) {
             fragment = new AlimentacionFragment();
             getSupportFragmentManager().beginTransaction().replace(R.id.content_home, fragment).addToBackStack(null).commit();
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_tools) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+        } else if (id == R.id.nav_consejos) {
+            Intent intent = new Intent(Home.this, ConsejosActivity.class);
+            startActivity(intent);
+        } else if (id == R.id.nav_datos) {
+            Intent intent = new Intent(Home.this, IngresoDatosActivity.class);
+            startActivity(intent);
+        } else if (id == R.id.nav_contacta) {
+            Intent intent = new Intent(Home.this, ContactoActivity.class);
+            startActivity(intent);
+        } else if (id == R.id.nav_nosotros) {
+            Intent intent = new Intent(Home.this, NosotrosActivity.class);
+            startActivity(intent);
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
