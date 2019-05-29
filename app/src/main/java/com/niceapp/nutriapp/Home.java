@@ -22,6 +22,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -34,15 +36,19 @@ import com.niceapp.nutriapp.modelo.Persona;
 import com.niceapp.nutriapp.nosotros.ContactoActivity;
 import com.niceapp.nutriapp.nosotros.NosotrosActivity;
 
+
+
+//OnCreate
+
 public class Home extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    public static final String user="names";
+    public static final String user2="names";
     private TextView txtUser;
 
     private EditText usuarioTxt, edadTxt, pesoTxt, estaturaTxt;
     Button guardarBtn;
-    private String usuarioE, id;
+    private String usuarioE, idUser;
     private int edadE, estaturaE;
     private double pesoE;
 
@@ -54,12 +60,22 @@ public class Home extends AppCompatActivity
         setContentView(R.layout.activity_home);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
+        if (user != null) {
+            usuarioE = user.getDisplayName();
+            idUser = user.getUid();
+            databaseReference = FirebaseDatabase.getInstance().getReference();
 
+            initComponents();
+        } else {
+            goLoginScreen();
+        }
         txtUser =(TextView)findViewById(R.id.txtUser);
-        String user = getIntent().getStringExtra("names");
-        txtUser.setText("¡Bienvenido "+ user +"!");
-
+        String user2 = getIntent().getStringExtra("names");
+        txtUser.setText("¡Bienvenido "+ user2 +"!");
+        
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -67,13 +83,47 @@ public class Home extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
-        initComponents();
-
-        databaseReference= FirebaseDatabase.getInstance().getReference();
     }
 
-    public void initComponents() {
-        usuarioTxt = findViewById(R.id.usuarioTxt);
+    private void userExistOnSystem(String idUser) {
+        databaseReference.child("persona").child(idUser).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (!dataSnapshot.exists() || dataSnapshot == null) {
+                    initComponents();
+                } else {
+                    ocultarElementos();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+
+    public void guardar(View view) {
+
+        //usuarioE = usuarioTxt.getText().toString();
+        estaturaE = Integer.parseInt(estaturaTxt.getText().toString());
+        edadE = Integer.parseInt(edadTxt.getText().toString());
+        pesoE = Double.parseDouble(pesoTxt.getText().toString());
+        Persona persona = new Persona(usuarioE, edadE, pesoE, estaturaE);
+        databaseReference.child("persona").child(idUser).setValue(persona);
+        Toast.makeText(getApplicationContext(), "Usuario Registrado", Toast.LENGTH_LONG).show();
+        ocultarElementos();
+    }
+
+    private void goLoginScreen() {
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
+
+    private void initComponents() {
+
         edadTxt = findViewById(R.id.edadTxt);
         pesoTxt = findViewById(R.id.pesoTxt);
         estaturaTxt = findViewById(R.id.estaturaTxt);
@@ -141,25 +191,11 @@ public class Home extends AppCompatActivity
         return true;
     }
 
-    public void guardar(View view) {
-        usuarioE= usuarioTxt.getText().toString();
-        estaturaE=Integer.parseInt(estaturaTxt.getText().toString());
-        edadE = Integer.parseInt(edadTxt.getText().toString());
-        pesoE = Double.parseDouble(pesoTxt.getText().toString());
-        id=databaseReference.push().getKey();
-        Persona persona = new Persona(usuarioE,edadE,pesoE,estaturaE);
-        databaseReference.child("persona").setValue(persona);
-        Toast.makeText(getApplicationContext(),"Usuario Registrado", Toast.LENGTH_LONG).show();
-        ocultarElementos();
-    }
-
-    private void ocultarElementos(){
-        usuarioTxt.setVisibility(View.GONE);
+    private void ocultarElementos() {
         estaturaTxt.setVisibility(View.GONE);
         edadTxt.setVisibility(View.GONE);
         pesoTxt.setVisibility(View.GONE);
         guardarBtn.setVisibility(View.GONE);
-
     }
 
 

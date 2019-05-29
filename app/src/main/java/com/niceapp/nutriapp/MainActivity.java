@@ -9,6 +9,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,6 +30,8 @@ import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseUser;
 import com.niceapp.nutriapp.registro.RegistroActivity;
 
+import java.util.Arrays;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
     private TextView txtCorreo;
@@ -37,42 +40,76 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public CallbackManager callbackManager;
     private LoginButton loginButton;
-    private static final String EMAIL = "email";
-    private FirebaseAuth mAuth;
+
+    private FirebaseAuth firebaseAuth;
+    private FirebaseAuth.AuthStateListener firebaseAuthListener;
+
+    private ProgressBar progressBar;
     private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        mAuth = FirebaseAuth.getInstance();
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initComponents();
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
         btnIniciarSesion.setOnClickListener(this);
         progressDialog = new ProgressDialog(this);
         callbackManager = CallbackManager.Factory.create();
-        loginButton=(LoginButton) findViewById(R.id.login_button);
-
+        loginButton = (LoginButton) findViewById(R.id.login_button);
+        loginButton.setReadPermissions(Arrays.asList("email"));
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-                goMainScreem();
-                Toast.makeText(getApplicationContext(),"Siii",Toast.LENGTH_LONG);
-                FirebaseUser currentUser = mAuth.getCurrentUser();
+                handleFacebookAccessToken(loginResult.getAccessToken());
             }
 
             @Override
             public void onCancel() {
-                Toast.makeText(getApplicationContext(), "Se cancelo la operación", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Ocurrio un error inesperado", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onError(FacebookException error) {
-                Toast.makeText(getApplicationContext(), "Revisa tu conexión a internet", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "No se pudo conectar", Toast.LENGTH_SHORT).show();
+            }
+        });
+        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if (user != null) {
+                    goMainScreen();
+                }
+            }
+        };
+    }
 
+    private void handleFacebookAccessToken(AccessToken accessToken) {
+        progressBar.setVisibility(View.VISIBLE);
+        loginButton.setVisibility(View.GONE);
+
+        AuthCredential credential = FacebookAuthProvider.getCredential(accessToken.getToken());
+        firebaseAuth.signInWithCredential(credential).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (!task.isSuccessful()) {
+                    Toast.makeText(getApplicationContext(), "Bienvenido: ", Toast.LENGTH_LONG).show();
+                }
+                progressBar.setVisibility(View.GONE);
+                loginButton.setVisibility(View.VISIBLE);
             }
         });
     }
+
+    private void goMainScreen() {
+        Intent intent = new Intent(this, Home.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
+
+
 
     private void initComponents() {
         txtCorreo = findViewById(R.id.txtCorreo);
@@ -101,17 +138,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         progressDialog.show();
 
         //loguear usuario
-        mAuth.signInWithEmailAndPassword(email, password)
+        firebaseAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         //checking if success
                         if (task.isSuccessful()) {
                             int pos = email.indexOf("@");
-                            String user = email.substring(0, pos);
+                            String user2 = email.substring(0, pos);
                             Toast.makeText(MainActivity.this, "Bienvenido: " + txtCorreo.getText(), Toast.LENGTH_LONG).show();
                             Intent intencion = new Intent(getApplication(), Home.class);
-                            intencion.putExtra(Home.user, user);
+                            intencion.putExtra(Home.user2, user2);
                             startActivity(intencion);
                         } else {
                             if (task.getException() instanceof FirebaseAuthUserCollisionException) {//si se presenta una colisión
@@ -130,16 +167,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         loguearUsuario();
     }
 
-    private void goMainScreem() {
-        Intent intent = new Intent(this, Home.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        callbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        callbackManager.onActivityResult(requestCode, resultCode, data);
+    protected void onStart() {
+        super.onStart();
+        firebaseAuth.addAuthStateListener(firebaseAuthListener);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        firebaseAuth.removeAuthStateListener(firebaseAuthListener);
     }
 
     public void goToRegistroActivity(View view) {
