@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "489145161280-jh5rhj4phlojq91l8eul4vtet88fnfu5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.niceapp.nutriapp",
+            "certificate_hash": "15ee9732acac101b24558c072e83777f1d8e08ca"
+          }
+        },
+        {
           "client_id": "489145161280-utraevbbujr0l1t7g57kdeo7e6kot54r.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

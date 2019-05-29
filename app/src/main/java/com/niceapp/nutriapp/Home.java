@@ -19,6 +19,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -36,9 +37,12 @@ import com.niceapp.nutriapp.nosotros.NosotrosActivity;
 public class Home extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    public static final String user="names";
+    private TextView txtUser;
+
     private EditText usuarioTxt, edadTxt, pesoTxt, estaturaTxt;
     Button guardarBtn;
-    private String usuarioE, idUser;
+    private String usuarioE, id;
     private int edadE, estaturaE;
     private double pesoE;
 
@@ -50,25 +54,11 @@ public class Home extends AppCompatActivity
         setContentView(R.layout.activity_home);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        usuarioE = getIntent().getStringExtra("userName");
-        idUser = getIntent().getStringExtra("idUser");
-        initComponents();
-        databaseReference = FirebaseDatabase.getInstance().getReference();
-        databaseReference.child("persona").child(idUser).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (!dataSnapshot.exists() || dataSnapshot == null) {
-                    initComponents();
-                } else {
-                    ocultarElementos();
-                }
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
 
-            }
-        });
+        txtUser =(TextView)findViewById(R.id.txtUser);
+        String user = getIntent().getStringExtra("names");
+        txtUser.setText("¡Bienvenido "+ user +"!");
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
@@ -77,11 +67,13 @@ public class Home extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
+        initComponents();
 
+        databaseReference= FirebaseDatabase.getInstance().getReference();
     }
 
     public void initComponents() {
-
+        usuarioTxt = findViewById(R.id.usuarioTxt);
         edadTxt = findViewById(R.id.edadTxt);
         pesoTxt = findViewById(R.id.pesoTxt);
         estaturaTxt = findViewById(R.id.estaturaTxt);
@@ -150,18 +142,19 @@ public class Home extends AppCompatActivity
     }
 
     public void guardar(View view) {
-
-        estaturaE = Integer.parseInt(estaturaTxt.getText().toString());
+        usuarioE= usuarioTxt.getText().toString();
+        estaturaE=Integer.parseInt(estaturaTxt.getText().toString());
         edadE = Integer.parseInt(edadTxt.getText().toString());
         pesoE = Double.parseDouble(pesoTxt.getText().toString());
-        Persona persona = new Persona(usuarioE, edadE, pesoE, estaturaE);
-        databaseReference.child("persona").child(idUser).setValue(persona);
-        Toast.makeText(getApplicationContext(), "Usuario Registrado", Toast.LENGTH_LONG).show();
-        //ocultarElementos();
+        id=databaseReference.push().getKey();
+        Persona persona = new Persona(usuarioE,edadE,pesoE,estaturaE);
+        databaseReference.child("persona").setValue(persona);
+        Toast.makeText(getApplicationContext(),"Usuario Registrado", Toast.LENGTH_LONG).show();
+        ocultarElementos();
     }
 
-    private void ocultarElementos() {
-
+    private void ocultarElementos(){
+        usuarioTxt.setVisibility(View.GONE);
         estaturaTxt.setVisibility(View.GONE);
         edadTxt.setVisibility(View.GONE);
         pesoTxt.setVisibility(View.GONE);
