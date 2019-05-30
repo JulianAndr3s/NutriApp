@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.database.ChildEventListener;
@@ -30,6 +31,7 @@ public class ConsejosActivity extends AppCompatActivity {
     FirebaseDatabase database;
     DatabaseReference dbRef;
 
+    private TextView dietaDiariaTxt;
 
     private ListView dataListView;
 
@@ -39,16 +41,16 @@ public class ConsejosActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        dietaDiariaTxt = findViewById(R.id.dietaDiariaTxt);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_consejos);
         viewUtil = new ViewUtil(this);
         viewUtil.setToolBar("Consejos");
         dataListView = (ListView) findViewById(R.id.dataListView);
         adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_single_choice,
-                listItems);
+                android.R.layout.simple_list_item_checked);
         dataListView.setAdapter(adapter);
-        dataListView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+
         getDatosDesayunoBtn = findViewById(R.id.getDatosDesayunoBtn);
 
         database = FirebaseDatabase.getInstance();
@@ -99,9 +101,13 @@ public class ConsejosActivity extends AppCompatActivity {
     public void getDatosDesayuno(View view) {
         adapter.clear();
         dbRef = database.getReference().child("Recetas").child("Desayuno");
+        //obtenerDesayunoDiario(dbRef);
         addChildEventListener();
     }
 
+    private void obtenerDesayunoDiario(DatabaseReference dbRef) {
+
+    }
 
     public void getDatosAlmuerzo(View view) {
         adapter.clear();

@@ -3,10 +3,7 @@ package com.niceapp.nutriapp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.View;
 import android.support.v4.view.GravityCompat;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -22,6 +19,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.login.LoginManager;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -37,13 +35,12 @@ import com.niceapp.nutriapp.nosotros.ContactoActivity;
 import com.niceapp.nutriapp.nosotros.NosotrosActivity;
 
 
-
 //OnCreate
 
 public class Home extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    public static final String user2="names";
+    public static final String user2 = "names";
     private TextView txtUser;
 
     private EditText usuarioTxt, edadTxt, pesoTxt, estaturaTxt;
@@ -52,7 +49,9 @@ public class Home extends AppCompatActivity
     private int edadE, estaturaE;
     private double pesoE;
 
-    DatabaseReference databaseReference;
+    private DatabaseReference databaseReference;
+    private FirebaseUser user;
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,20 +60,23 @@ public class Home extends AppCompatActivity
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        initComponents();
+        ocultarElementos();
+        mAuth = FirebaseAuth.getInstance();
+        user = FirebaseAuth.getInstance().getCurrentUser();
 
         if (user != null) {
             usuarioE = user.getDisplayName();
             idUser = user.getUid();
             databaseReference = FirebaseDatabase.getInstance().getReference();
-
-            initComponents();
+            userExistOnSystem(idUser);
+            //initComponents();
         } else {
             goLoginScreen();
         }
-        txtUser =(TextView)findViewById(R.id.txtUser);
+        txtUser = (TextView) findViewById(R.id.txtUser);
         String user2 = getIntent().getStringExtra("names");
-        txtUser.setText("¡Bienvenido "+ user2 +"!");
+        txtUser.setText("¡Bienvenido " + user2 + "!");
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
@@ -86,13 +88,15 @@ public class Home extends AppCompatActivity
     }
 
     private void userExistOnSystem(String idUser) {
-        databaseReference.child("persona").child(idUser).addValueEventListener(new ValueEventListener() {
+        databaseReference.child("persona").child(idUser).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (!dataSnapshot.exists() || dataSnapshot == null) {
-                    initComponents();
+                if (dataSnapshot.getValue() != null) {
+                    Toast.makeText(getApplicationContext(), "No es necesario cambiar la informacion", Toast.LENGTH_LONG).show();
                 } else {
-                    ocultarElementos();
+                    Toast.makeText(getApplicationContext(), "Debe ingresar informacion", Toast.LENGTH_LONG).show();
+                    mostrarElementos();
+
                 }
             }
 
@@ -103,10 +107,16 @@ public class Home extends AppCompatActivity
         });
     }
 
+    private void mostrarElementos() {
+        estaturaTxt.setVisibility(View.VISIBLE);
+        edadTxt.setVisibility(View.VISIBLE);
+        pesoTxt.setVisibility(View.VISIBLE);
+        guardarBtn.setVisibility(View.VISIBLE);
+    }
+
 
     public void guardar(View view) {
 
-        //usuarioE = usuarioTxt.getText().toString();
         estaturaE = Integer.parseInt(estaturaTxt.getText().toString());
         edadE = Integer.parseInt(edadTxt.getText().toString());
         pesoE = Double.parseDouble(pesoTxt.getText().toString());
@@ -123,7 +133,6 @@ public class Home extends AppCompatActivity
     }
 
     private void initComponents() {
-
         edadTxt = findViewById(R.id.edadTxt);
         pesoTxt = findViewById(R.id.pesoTxt);
         estaturaTxt = findViewById(R.id.estaturaTxt);
@@ -199,4 +208,9 @@ public class Home extends AppCompatActivity
     }
 
 
+    public void cerrarSesion(View view) {
+        mAuth.signOut();
+        LoginManager.getInstance().logOut();
+        goLoginScreen();
+    }
 }

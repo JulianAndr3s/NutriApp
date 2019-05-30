@@ -17,10 +17,10 @@
         android:text="Comida"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.509"
+        app:layout_constraintHorizontal_bias="0.508"
         app:layout_constraintStart_toEndOf="@+id/getDatosAlmuerzoBtn"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.191" />
+        app:layout_constraintVertical_bias="0.131" />
 
     <Button
         android:id="@+id/getDatosDesayunoBtn"
@@ -37,7 +37,7 @@
         app:layout_constraintHorizontal_bias="0.026"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.191" />
+        app:layout_constraintVertical_bias="0.131" />
 
     <Button
         android:id="@+id/getDatosAlmuerzoBtn"
@@ -54,22 +54,38 @@
         app:layout_constraintHorizontal_bias="0.186"
         app:layout_constraintStart_toEndOf="@+id/getDatosDesayunoBtn"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.191" />
+        app:layout_constraintVertical_bias="0.131" />
 
     <ListView
         android:id="@+id/dataListView"
-        android:layout_width="318dp"
-        android:layout_height="369dp"
+        android:layout_width="326dp"
+        android:layout_height="307dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.519"
+        app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/getDatosDesayunoBtn">
+        app:layout_constraintTop_toBottomOf="@+id/getDatosDesayunoBtn"
+        app:layout_constraintVertical_bias="0.143">
 
     </ListView>
+
+    <TextView
+        android:id="@+id/dietaDiariaTxt"
+        android:layout_width="334dp"
+        android:layout_height="150dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dataListView"
+        app:layout_constraintVertical_bias="1.0" />
 
 </android.support.constraint.ConstraintLayout>

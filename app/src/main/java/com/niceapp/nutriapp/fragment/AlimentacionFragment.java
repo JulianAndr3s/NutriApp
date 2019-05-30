@@ -32,8 +32,8 @@ public class AlimentacionFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view= inflater.inflate(R.layout.fragment_alimentacion, container, false);
-        mDatabase= FirebaseDatabase.getInstance().getReference();
+        View view = inflater.inflate(R.layout.fragment_alimentacion, container, false);
+        mDatabase = FirebaseDatabase.getInstance().getReference();
 
         initComponents(view);
         getDatosBtn.setOnClickListener(new View.OnClickListener() {
@@ -42,19 +42,19 @@ public class AlimentacionFragment extends Fragment {
                 mDatabase.child("persona").addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        if(dataSnapshot.exists()){
+                        if (dataSnapshot.exists()) {
                             String usuario = dataSnapshot.child("usuario").getValue().toString();
                             String edad = dataSnapshot.child("edad").getValue().toString();
                             String peso = dataSnapshot.child("peso").getValue().toString();
                             String estatura = dataSnapshot.child("estatura").getValue().toString();
 
-                            nombreTxt.setText("Usuario "+ usuario);
-                            edadTxt.setText("Edad "+edad);
-                            estaturaTxt.setText("Estatura "+estatura);
-                            pesoTxt.setText("Peso "+peso);
-                        }else{
+                            nombreTxt.setText("Usuario " + usuario);
+                            edadTxt.setText("Edad " + edad);
+                            estaturaTxt.setText("Estatura " + estatura);
+                            pesoTxt.setText("Peso " + peso);
+                        } else {
                             System.out.println("Nothing");
-                            Toast.makeText(getContext(),"Nothing else metters xD",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), "Nothing else metters xD", Toast.LENGTH_SHORT).show();
 
                         }
                     }
@@ -70,11 +70,11 @@ public class AlimentacionFragment extends Fragment {
     }
 
     private void initComponents(View view) {
-        nombreTxt=view.findViewById(R.id.nombreTxt);
-        edadTxt=view.findViewById(R.id.edadTxt);
-        estaturaTxt=view.findViewById(R.id.estaturaTxt);
-        pesoTxt=view.findViewById(R.id.pesoTxt);
-        getDatosBtn= view.findViewById(R.id.getDatos);
+        nombreTxt = view.findViewById(R.id.nombreTxt);
+        edadTxt = view.findViewById(R.id.edadTxt);
+        estaturaTxt = view.findViewById(R.id.estaturaTxt);
+        pesoTxt = view.findViewById(R.id.pesoTxt);
+        getDatosBtn = view.findViewById(R.id.getDatos);
     }
 
 }
