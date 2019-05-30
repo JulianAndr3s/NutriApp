@@ -31,7 +31,6 @@ public class ConsejosActivity extends AppCompatActivity {
     DatabaseReference dbRef;
 
 
-
     private ListView dataListView;
 
     ArrayList<String> listItems = new ArrayList<String>();
@@ -98,9 +97,21 @@ public class ConsejosActivity extends AppCompatActivity {
 
 
     public void getDatosDesayuno(View view) {
+        adapter.clear();
         dbRef = database.getReference().child("Recetas").child("Desayuno");
         addChildEventListener();
     }
 
 
+    public void getDatosAlmuerzo(View view) {
+        adapter.clear();
+        dbRef = database.getReference().child("Recetas").child("Almuerzo");
+        addChildEventListener();
+    }
+
+    public void getDatosComida(View view) {
+        adapter.clear();
+        dbRef = database.getReference().child("Recetas").child("Comida");
+        addChildEventListener();
+    }
 }
