@@ -60,7 +60,7 @@ public class Home extends AppCompatActivity
         setContentView(R.layout.activity_home);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        
+
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
         if (user != null) {
@@ -75,7 +75,7 @@ public class Home extends AppCompatActivity
         txtUser =(TextView)findViewById(R.id.txtUser);
         String user2 = getIntent().getStringExtra("names");
         txtUser.setText("¡Bienvenido "+ user2 +"!");
-        
+
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
