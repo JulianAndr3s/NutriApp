@@ -30,6 +30,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.niceapp.nutriapp.alimentacion.AlimentacionActivity;
 import com.niceapp.nutriapp.consejos.ConsejosActivity;
 import com.niceapp.nutriapp.datosusuario.IngresoDatosActivity;
+import com.niceapp.nutriapp.facade.MasaCorporal;
 import com.niceapp.nutriapp.modelo.Persona;
 import com.niceapp.nutriapp.nosotros.ContactoActivity;
 import com.niceapp.nutriapp.nosotros.NosotrosActivity;
@@ -41,13 +42,19 @@ public class Home extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     public static final String user2 = "names";
-    private TextView txtUser;
 
-    private EditText usuarioTxt, edadTxt, pesoTxt, estaturaTxt;
-    Button guardarBtn;
-    private String usuarioE, idUser;
-    private int edadE, estaturaE;
-    private double pesoE;
+
+    private EditText edadTxt;
+    private EditText pesoTxt;
+    private EditText estaturaTxt;
+
+    private Button guardarBtn;
+    private String usuarioE;
+    private String idUser;
+    private int edadE;
+    private double estaturaE;
+    private int pesoE;
+    private double masaCorporalE;
 
     private DatabaseReference databaseReference;
     private FirebaseUser user;
@@ -70,13 +77,10 @@ public class Home extends AppCompatActivity
             idUser = user.getUid();
             databaseReference = FirebaseDatabase.getInstance().getReference();
             userExistOnSystem(idUser);
-            //initComponents();
+
         } else {
             goLoginScreen();
         }
-        txtUser = (TextView) findViewById(R.id.txtUser);
-        String user2 = getIntent().getStringExtra("names");
-        txtUser.setText("¡Bienvenido " + user2 + "!");
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
@@ -91,12 +95,9 @@ public class Home extends AppCompatActivity
         databaseReference.child("persona").child(idUser).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.getValue() != null) {
-                    Toast.makeText(getApplicationContext(), "No es necesario cambiar la informacion", Toast.LENGTH_LONG).show();
-                } else {
-                    Toast.makeText(getApplicationContext(), "Debe ingresar informacion", Toast.LENGTH_LONG).show();
+                if (dataSnapshot.getValue() == null) {
+                    Toast.makeText(getApplicationContext(), "Debe ingresar la siguiente informacion", Toast.LENGTH_LONG).show();
                     mostrarElementos();
-
                 }
             }
 
@@ -117,10 +118,11 @@ public class Home extends AppCompatActivity
 
     public void guardar(View view) {
 
-        estaturaE = Integer.parseInt(estaturaTxt.getText().toString());
+        estaturaE = Double.parseDouble(estaturaTxt.getText().toString()) / 100;
         edadE = Integer.parseInt(edadTxt.getText().toString());
-        pesoE = Double.parseDouble(pesoTxt.getText().toString());
-        Persona persona = new Persona(usuarioE, edadE, pesoE, estaturaE);
+        pesoE = Integer.parseInt(pesoTxt.getText().toString());
+        masaCorporalE = MasaCorporal.getMasaCorporal(estaturaE, pesoE);
+        Persona persona = new Persona(usuarioE, edadE, pesoE, estaturaE, masaCorporalE);
         databaseReference.child("persona").child(idUser).setValue(persona);
         Toast.makeText(getApplicationContext(), "Usuario Registrado", Toast.LENGTH_LONG).show();
         ocultarElementos();

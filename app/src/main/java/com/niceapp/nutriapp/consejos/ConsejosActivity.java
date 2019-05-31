@@ -4,7 +4,6 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -15,8 +14,6 @@ import com.niceapp.nutriapp.R;
 import com.niceapp.nutriapp.util.GeneraRandom;
 import com.niceapp.nutriapp.util.ViewUtil;
 
-import java.util.Random;
-
 public class ConsejosActivity extends AppCompatActivity {
 
     private ViewUtil viewUtil;
@@ -24,16 +21,14 @@ public class ConsejosActivity extends AppCompatActivity {
 
 
     DatabaseReference databaseReference;
-    private Random r = new Random();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_consejos);
-        viewUtil = new ViewUtil(this);
-        viewUtil.setToolBar("Consejos");
+
         initComponents();
-        databaseReference = FirebaseDatabase.getInstance().getReference();
+
 
         databaseReference.child("Consejos").addValueEventListener(new ValueEventListener() {
             @Override
@@ -55,6 +50,10 @@ public class ConsejosActivity extends AppCompatActivity {
 
     private void initComponents() {
         consejosTxt = findViewById(R.id.consejosTxt);
+        viewUtil = new ViewUtil(this);
+        viewUtil.setToolBar("Consejos");
+        databaseReference = FirebaseDatabase.getInstance().getReference();
+
     }
 
     @Override

@@ -36,15 +36,15 @@ public class RegistroActivity extends AppCompatActivity implements View.OnClickL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registro);
-        viewUtil = new ViewUtil(this);
-        viewUtil.setToolBar("Registro");
         initComponents();
-        firebaseAuth = FirebaseAuth.getInstance();
         progressDialog = new ProgressDialog(this);
         btnRegistrar.setOnClickListener(this);
     }
 
     private void initComponents() {
+        viewUtil = new ViewUtil(this);
+        viewUtil.setToolBar("Registro");
+        firebaseAuth = FirebaseAuth.getInstance();
 
         txtNombre = findViewById(R.id.txtNombre);
         txtApellido = findViewById(R.id.txtApellido);
@@ -62,20 +62,20 @@ public class RegistroActivity extends AppCompatActivity implements View.OnClickL
         return true;
     }
 
-    private void registrarUsuario(){
+    private void registrarUsuario() {
 
         //Obtenemos el email y la contraseña desde las cajas de texto
         String email = txtCorreo.getText().toString().trim();
-        String password  = txtContraseña.getText().toString().trim();
+        String password = txtContraseña.getText().toString().trim();
 
         //Verificamos que las cajas de texto no esten vacías
-        if(TextUtils.isEmpty(email)){
-            Toast.makeText(this,"Se debe ingresar un email",Toast.LENGTH_LONG).show();
+        if (TextUtils.isEmpty(email)) {
+            Toast.makeText(this, "Se debe ingresar un email", Toast.LENGTH_LONG).show();
             return;
         }
 
-        if(TextUtils.isEmpty(password)){
-            Toast.makeText(this,"Falta ingresar la contraseña",Toast.LENGTH_LONG).show();
+        if (TextUtils.isEmpty(password)) {
+            Toast.makeText(this, "Falta ingresar la contraseña", Toast.LENGTH_LONG).show();
             return;
         }
 
@@ -89,14 +89,14 @@ public class RegistroActivity extends AppCompatActivity implements View.OnClickL
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         //checking if success
-                        if(task.isSuccessful()){
+                        if (task.isSuccessful()) {
 
-                            Toast.makeText(RegistroActivity.this,"Se ha registrado el usuario con el email: "+ txtCorreo.getText(),Toast.LENGTH_LONG).show();
-                        }else{
+                            Toast.makeText(RegistroActivity.this, "Se ha registrado el usuario con el email: " + txtCorreo.getText(), Toast.LENGTH_LONG).show();
+                        } else {
                             if (task.getException() instanceof FirebaseAuthUserCollisionException) {//si se presenta una colisión
                                 Toast.makeText(RegistroActivity.this, "Ese usuario ya existe ", Toast.LENGTH_SHORT).show();
                             }
-                            Toast.makeText(RegistroActivity.this,"No se pudo registrar el usuario ",Toast.LENGTH_LONG).show();
+                            Toast.makeText(RegistroActivity.this, "No se pudo registrar el usuario ", Toast.LENGTH_LONG).show();
                         }
                         progressDialog.dismiss();
                     }
