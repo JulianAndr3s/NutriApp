@@ -14,6 +14,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.niceapp.nutriapp.R;
+import com.niceapp.nutriapp.util.GeneraRandom;
 import com.niceapp.nutriapp.util.ViewUtil;
 
 import java.util.ArrayList;
@@ -30,7 +31,6 @@ public class AlimentacionActivity extends AppCompatActivity {
 
     private ListView dataListView;
 
-    ArrayList<String> listItems = new ArrayList<String>();
     ArrayList<String> listKeys = new ArrayList<String>();
     ArrayAdapter<String> adapter;
 
@@ -41,7 +41,7 @@ public class AlimentacionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_alimentacion);
         viewUtil = new ViewUtil(this);
         viewUtil.setToolBar("Alimentacion");
-        dataListView = (ListView) findViewById(R.id.dataListView);
+        dataListView = findViewById(R.id.dataListView);
         adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_checked);
         dataListView.setAdapter(adapter);
@@ -95,24 +95,20 @@ public class AlimentacionActivity extends AppCompatActivity {
 
     public void getDatosDesayuno(View view) {
         adapter.clear();
-        dbRef = database.getReference().child("Recetas").child("Desayuno");
-        //obtenerDesayunoDiario(dbRef);
+        dbRef = database.getReference().child("Recetas").child("Desayuno").child(GeneraRandom.getRandomComidas());
         addChildEventListener();
     }
 
-    private void obtenerDesayunoDiario(DatabaseReference dbRef) {
-
-    }
 
     public void getDatosAlmuerzo(View view) {
         adapter.clear();
-        dbRef = database.getReference().child("Recetas").child("Almuerzo");
+        dbRef = database.getReference().child("Recetas").child("Almuerzo").child(GeneraRandom.getRandomComidas());
         addChildEventListener();
     }
 
     public void getDatosComida(View view) {
         adapter.clear();
-        dbRef = database.getReference().child("Recetas").child("Comida");
+        dbRef = database.getReference().child("Recetas").child("Comida").child(GeneraRandom.getRandomComidas());
         addChildEventListener();
     }
 }
