@@ -44,4 +44,9 @@
     <string name="correo_desarrollo">nutrihealth@gmail.com</string>
     <string name="title_activity_consejos">Consejos</string>
     <string name="title_activity_ingresodatos">Ingreso de datos</string>
+    <string name="informacion_cargar_datos">Ingrese los datos cuando vayas evolucionando, creciendo o rebajando de peso y altura.</string>
+    <string name="recomendacion_actualizar_datos">Se recomienda hacer este proceso cada 3 meses para actualizar tus datos.</string>
+    <string name="actualizar">Actualizar</string>
+    <string name="estatura">Estatura</string>
+    <string name="peso">Peso</string>
 </resources>

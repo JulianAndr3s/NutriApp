@@ -27,9 +27,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.niceapp.nutriapp.alimentacion.AlimentacionActivity;
 import com.niceapp.nutriapp.consejos.ConsejosActivity;
 import com.niceapp.nutriapp.datosusuario.IngresoDatosActivity;
-import com.niceapp.nutriapp.fragment.AlimentacionFragment;
 import com.niceapp.nutriapp.modelo.Persona;
 import com.niceapp.nutriapp.nosotros.ContactoActivity;
 import com.niceapp.nutriapp.nosotros.NosotrosActivity;
@@ -178,11 +178,11 @@ public class Home extends AppCompatActivity
         Fragment fragment = null;
         int id = item.getItemId();
 
-        if (id == R.id.nav_alimentacion) {
-            fragment = new AlimentacionFragment();
-            getSupportFragmentManager().beginTransaction().replace(R.id.content_home, fragment).addToBackStack(null).commit();
-        } else if (id == R.id.nav_consejos) {
+        if (id == R.id.nav_consejos) {
             Intent intent = new Intent(Home.this, ConsejosActivity.class);
+            startActivity(intent);
+        } else if (id == R.id.nav_alientacion) {
+            Intent intent = new Intent(Home.this, AlimentacionActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_datos) {
             Intent intent = new Intent(Home.this, IngresoDatosActivity.class);

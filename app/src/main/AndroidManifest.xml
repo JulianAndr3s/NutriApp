@@ -11,25 +11,26 @@
         android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".consejos.ConsejosActivity"></activity>
         <activity
-        android:name=".Home"
-        android:label="@string/title_activity_home"
-        android:theme="@style/AppTheme.NoActionBar" />
+            android:name=".Home"
+            android:label="@string/title_activity_home"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".registro.RegistroActivity"
-            android:label="@string/title_activity_registro"/>
+            android:label="@string/title_activity_registro" />
         <activity
-            android:name=".consejos.ConsejosActivity"
-            android:label="@string/title_activity_consejos"/>
+            android:name=".alimentacion.AlimentacionActivity"
+            android:label="@string/title_activity_consejos" />
         <activity
             android:name=".datosusuario.IngresoDatosActivity"
-            android:label="@string/title_activity_ingresodatos"/>
+            android:label="@string/title_activity_ingresodatos" />
         <activity
             android:name=".nosotros.ContactoActivity"
-            android:label="@string/contacta"/>
+            android:label="@string/contacta" />
         <activity
             android:name=".nosotros.NosotrosActivity"
-            android:label="@string/info_nosotros"/>
+            android:label="@string/info_nosotros" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -41,6 +42,9 @@
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
 
         <activity
             android:name="com.facebook.FacebookActivity"
