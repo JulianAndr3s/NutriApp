@@ -55,6 +55,8 @@ public class Home extends AppCompatActivity
     private double estaturaE;
     private int pesoE;
     private double masaCorporalE;
+    private String estadoNutricionE;
+    private String tipoPacienteE;
 
     private DatabaseReference databaseReference;
     private FirebaseUser user;
@@ -118,15 +120,46 @@ public class Home extends AppCompatActivity
 
     public void guardar(View view) {
 
-        estaturaE = Double.parseDouble(estaturaTxt.getText().toString()) / 100;
-        edadE = Integer.parseInt(edadTxt.getText().toString());
-        pesoE = Integer.parseInt(pesoTxt.getText().toString());
-        masaCorporalE = MasaCorporal.getMasaCorporal(estaturaE, pesoE);
-        Persona persona = new Persona(usuarioE, edadE, pesoE, estaturaE, masaCorporalE);
-        databaseReference.child("persona").child(idUser).setValue(persona);
-        Toast.makeText(getApplicationContext(), "Usuario Registrado", Toast.LENGTH_LONG).show();
-        ocultarElementos();
+
+        datosConsistentes();
+
     }
+
+    private void datosConsistentes() {
+        if (datosIngresados()) {
+            estaturaE = Double.parseDouble(estaturaTxt.getText().toString()) / 100;
+            edadE = Integer.parseInt(edadTxt.getText().toString());
+            pesoE = Integer.parseInt(pesoTxt.getText().toString());
+            if (MasaCorporal.cumpleReglas(estaturaE, edadE, pesoE)) {
+                masaCorporalE = MasaCorporal.getMasaCorporal(estaturaE, pesoE);
+                tipoPacienteE = MasaCorporal.getTipoPaciente(edadE);
+                estadoNutricionE = MasaCorporal.getEstadoPaciente(masaCorporalE);
+                Persona persona = new Persona(usuarioE, edadE, pesoE, estaturaE, masaCorporalE, estadoNutricionE, tipoPacienteE);
+                databaseReference.child("persona").child(idUser).setValue(persona);
+                Toast.makeText(getApplicationContext(), "Usuario Registrado", Toast.LENGTH_LONG).show();
+                ocultarElementos();
+            } else {
+                Toast.makeText(getApplicationContext(), "Ingresa tus datos Reales", Toast.LENGTH_LONG).show();
+            }
+        }
+
+
+    }
+
+    private Boolean datosIngresados() {
+        if (estaturaTxt.getText().toString().equals("")) {
+            estaturaTxt.setError("Ingresa tu estatura");
+            return false;
+        } else if (edadTxt.getText().toString().equals("")) {
+            edadTxt.setError("Ingresa tu estatura");
+            return false;
+        } else if (pesoTxt.getText().toString().equals("")) {
+            pesoTxt.setError("Ingresa tu estatura");
+            return false;
+        }
+        return true;
+    }
+
 
     private void goLoginScreen() {
         Intent intent = new Intent(this, MainActivity.class);

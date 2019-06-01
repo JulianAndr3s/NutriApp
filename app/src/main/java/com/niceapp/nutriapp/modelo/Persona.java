@@ -7,19 +7,43 @@ public class Persona {
     private int peso;
     private double estatura;
     private double masaCorporal;
+    private String estadoNutricion;
+    private String tipoPaciente;
+
+
+
+    public String getEstadoNutricion() {
+        return estadoNutricion;
+    }
+
+    public void setEstadoNutricion(String estadoNutricion) {
+        this.estadoNutricion = estadoNutricion;
+    }
+
+    public String getTipoPaciente() {
+        return tipoPaciente;
+    }
+
+    public void setTipoPaciente(String tipoPaciente) {
+        this.tipoPaciente = tipoPaciente;
+    }
+
+
+    public Persona(String usuario, int edad, int peso, double estatura, double masaCorporal, String estadoNutricion, String tipoPaciente) {
+        this.usuario = usuario;
+        this.edad = edad;
+        this.peso = peso;
+        this.estatura = estatura;
+        this.masaCorporal = masaCorporal;
+        this.estadoNutricion = estadoNutricion;
+        this.tipoPaciente = tipoPaciente;
+    }
 
     public Persona(int masaCorporal) {
         super();
         this.masaCorporal = masaCorporal;
     }
 
-    public Persona(String usuario, int edad, int peso, double estatura, double masaCorporal) {
-        this.usuario = usuario;
-        this.edad = edad;
-        this.peso = peso;
-        this.estatura = estatura;
-        this.masaCorporal = masaCorporal;
-    }
 
     public String getUsuario() {
         return usuario;
