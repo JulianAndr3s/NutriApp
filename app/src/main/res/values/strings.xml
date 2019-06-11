@@ -49,4 +49,8 @@
     <string name="actualizar">Actualizar</string>
     <string name="estatura">Estatura</string>
     <string name="peso">Peso</string>
+    <string name="consejo_del_dia">Consejo del día.</string>
+    <string name="tu_info">Tu información</string>
+    <string name="bienvenido">Bienvenido a NutriApp</string>
+    <string name="informacion_home">A continuación podrás navegar por la aplicación, en el menu encontraras todas las secciones pertinentes.</string>
 </resources>

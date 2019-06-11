@@ -34,7 +34,7 @@ public class IngresoDatosActivity extends AppCompatActivity {
 
     private void initComponents() {
         viewUtil = new ViewUtil(this);
-        viewUtil.setToolBar("Ingresa tus datos");
+        viewUtil.setToolBar("Tu información");
         edadTxt = findViewById(R.id.edadTxt);
         pesoTxt = findViewById(R.id.pesoTxt);
         alturaTxt = findViewById(R.id.alturaTxt);

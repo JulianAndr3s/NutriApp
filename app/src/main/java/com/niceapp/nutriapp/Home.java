@@ -16,6 +16,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,6 +48,9 @@ public class Home extends AppCompatActivity
     private EditText edadTxt;
     private EditText pesoTxt;
     private EditText estaturaTxt;
+
+    private TextView informacionTxt;
+    private ImageView imagenView;
 
     private Button guardarBtn;
     private String usuarioE;
@@ -115,6 +119,8 @@ public class Home extends AppCompatActivity
         edadTxt.setVisibility(View.VISIBLE);
         pesoTxt.setVisibility(View.VISIBLE);
         guardarBtn.setVisibility(View.VISIBLE);
+        informacionTxt.setVisibility(View.INVISIBLE);
+        imagenView.setVisibility(View.INVISIBLE);
     }
 
 
@@ -138,6 +144,7 @@ public class Home extends AppCompatActivity
                 databaseReference.child("persona").child(idUser).setValue(persona);
                 Toast.makeText(getApplicationContext(), "Usuario Registrado", Toast.LENGTH_LONG).show();
                 ocultarElementos();
+                mostrarTexto();
             } else {
                 Toast.makeText(getApplicationContext(), "Ingresa tus datos Reales", Toast.LENGTH_LONG).show();
             }
@@ -145,6 +152,7 @@ public class Home extends AppCompatActivity
 
 
     }
+
 
     private Boolean datosIngresados() {
         if (estaturaTxt.getText().toString().equals("")) {
@@ -172,6 +180,8 @@ public class Home extends AppCompatActivity
         pesoTxt = findViewById(R.id.pesoTxt);
         estaturaTxt = findViewById(R.id.estaturaTxt);
         guardarBtn = findViewById(R.id.guardar);
+        informacionTxt = findViewById(R.id.informacionTxt);
+        imagenView = findViewById(R.id.imagenView);
     }
 
     @Override
@@ -242,6 +252,10 @@ public class Home extends AppCompatActivity
         guardarBtn.setVisibility(View.GONE);
     }
 
+    private void mostrarTexto() {
+        informacionTxt.setVisibility(View.GONE);
+        imagenView.setVisibility(View.GONE);
+    }
 
     public void cerrarSesion(View view) {
         mAuth.signOut();

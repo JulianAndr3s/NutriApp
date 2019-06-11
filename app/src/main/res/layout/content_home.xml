@@ -7,8 +7,8 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".Home"
-    tools:showIn="@layout/app_bar_home">
-
+    tools:showIn="@layout/app_bar_home"
+    android:background="@drawable/fondoapp2">
 
     <EditText
         android:id="@+id/edadTxt"
@@ -19,6 +19,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:ems="10"
+        android:fontFamily="@font/benchnine_bold"
         android:hint="Edad"
         android:inputType="number"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -26,7 +27,7 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.148" />
+        app:layout_constraintVertical_bias="0.338" />
 
     <EditText
         android:id="@+id/pesoTxt"
@@ -37,6 +38,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:ems="10"
+        android:fontFamily="@font/benchnine_bold"
         android:hint="Peso"
         android:inputType="number"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -54,6 +56,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:ems="10"
+        android:fontFamily="@font/benchnine_bold"
         android:hint="Estatura"
         android:inputType="number"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -70,12 +73,15 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
+        android:fontFamily="@font/benchnine_bold"
         android:onClick="guardar"
         android:text="INGRESAR DATOS"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/estaturaTxt" />
+        app:layout_constraintTop_toBottomOf="@+id/estaturaTxt"
+        app:layout_constraintVertical_bias="0.258" />
 
     <Button
         android:id="@+id/salirBtn"
@@ -85,14 +91,84 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
+        android:fontFamily="@font/benchnine_bold"
         android:onClick="cerrarSesion"
         android:text="Cerrar Sesion"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.899"
+        app:layout_constraintHorizontal_bias="0.917"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/guardar"
-        app:layout_constraintVertical_bias="0.547" />
+        app:layout_constraintVertical_bias="0.901" />
+
+    <TextView
+        android:id="@+id/textView22"
+        android:layout_width="239dp"
+        android:layout_height="37dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:fontFamily="@font/benchnine_bold"
+        android:text="@string/bienvenido"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.049" />
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="115dp"
+        android:layout_height="86dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/edadTxt"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView22"
+        app:srcCompat="@drawable/logo" />
+
+    <TextView
+        android:id="@+id/informacionTxt"
+        android:layout_width="278dp"
+        android:layout_height="102dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:fontFamily="@font/benchnine_bold"
+        android:text="@string/informacion_home"
+        android:textAlignment="center"
+        android:textColor="@color/com_facebook_button_background_color_focused"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView4"
+        app:layout_constraintVertical_bias="0.094" />
+
+    <ImageView
+        android:id="@+id/imagenView"
+        android:layout_width="342dp"
+        android:layout_height="174dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.4"
+        app:layout_constraintStart_toStartOf="@+id/guardar"
+        app:layout_constraintTop_toBottomOf="@+id/informacionTxt"
+        app:layout_constraintVertical_bias="0.032"
+        app:srcCompat="@drawable/nutricion" />
 
 
 </android.support.constraint.ConstraintLayout>

@@ -28,11 +28,12 @@ public class MasaCorporalTest {
         /**
          * todos los datos erroneos
          */
-        assert(MasaCorporal.cumpleReglas(1,21,73));
+        assertFalse(MasaCorporal.cumpleReglas(4,101,800));
 
         /**
          * Datos correctos
          */
+        assert(MasaCorporal.cumpleReglas(1,21,73));
     }
 
     @Test
